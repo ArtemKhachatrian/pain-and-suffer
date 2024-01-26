@@ -1,5 +1,4 @@
 package org.painandsuffer.characters;
-
 import org.painandsuffer.items.armor.Armor;
 import org.painandsuffer.items.weapon.Weapon;
 
@@ -21,12 +20,8 @@ public class Warrior extends Adventurer {
         super(name);
     }
 
-
-
-
     @Override
     public void defend() {
         System.out.println("Your defend"+ randomDiceRoll() + 10);
-
     }
 }

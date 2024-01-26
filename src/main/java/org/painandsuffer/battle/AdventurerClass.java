@@ -1,12 +1,16 @@
 package org.painandsuffer.battle;
 
-import java.util.Scanner;
-
 public enum AdventurerClass {
 
     WARRIOR,
     MAGE,
-    ROGUE
+    ROGUE,
+    PALADIN;
 
-
+    @Override
+    public String toString() {
+        char firstLetterUppercase = name().charAt(0);
+        String nameLowerCase = name().toLowerCase();
+        return nameLowerCase.replace(nameLowerCase.charAt(0), firstLetterUppercase);
+    }
 }

@@ -55,7 +55,7 @@ public abstract class Adventurer {
 
     public void setHealth(int health) {
         if (health <= 0) {
-            System.out.println("Lol you died");
+            System.out.println("Lol " + getName() + " died");
             this.health = 0;
             return;
         }
@@ -83,8 +83,8 @@ public abstract class Adventurer {
         int damage = randomDiceRoll() + getWeapon().damageIncrease();
         int armor = target.getArmor().getDefend();
         int damageDecreasedByArmor = damage > armor ? damage - armor : 0;
-        target.setHealth(getHealth() - damageDecreasedByArmor);
-        System.out.println("Your attack" + damage);
+        target.setHealth(target.getHealth() - damageDecreasedByArmor);
+        System.out.println("You attacked " + target.getName() + " for " + damage + " damage");
     }
 
     public void defend() {

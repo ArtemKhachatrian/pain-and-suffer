@@ -1,6 +1,7 @@
 package org.painandsuffer;
 
 import org.junit.jupiter.api.Test;
+import org.painandsuffer.battle.Battle;
 import org.painandsuffer.characters.Adventurer;
 import org.painandsuffer.characters.Mage;
 import org.painandsuffer.characters.Warrior;
@@ -43,5 +44,11 @@ class BattleTest {
         int damagedHealth = mage.getHealth();
         assertTrue(initialHealth > damagedHealth);
         assertEquals(100,initialHealth);
+    }
+
+    @Test
+    public void PvPTest(){
+       Battle battle = new Battle();
+       battle.provideTwoPlayersPvP();
     }
 }

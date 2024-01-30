@@ -1,6 +1,6 @@
 package org.painandsuffer;
 
-import org.painandsuffer.characters.Adventurer;
+import org.painandsuffer.characters.adventurers.Adventurer;
 
 import java.util.Random;
 

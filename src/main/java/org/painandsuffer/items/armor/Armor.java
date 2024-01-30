@@ -1,6 +1,11 @@
 package org.painandsuffer.items.armor;
 
-public abstract class Armor {
+import org.painandsuffer.characters.Creature;
+import org.painandsuffer.items.Equipable;
+import org.painandsuffer.items.Item;
+import org.painandsuffer.items.SelfUsableItem;
+
+public abstract class Armor implements Item, Equipable {
     private int defend;
     private int armorDurability;
 
@@ -24,4 +29,11 @@ public abstract class Armor {
     public void setArmorDurability(int armorDurability) {
         this.armorDurability = armorDurability;
     }
+
+    public String description() {
+        return "This is just an armor";
+    }
+
 }
+
+

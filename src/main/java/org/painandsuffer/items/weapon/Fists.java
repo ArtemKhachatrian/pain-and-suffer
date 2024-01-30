@@ -1,14 +1,10 @@
 package org.painandsuffer.items.weapon;
 
-public class Fists implements Weapon{
-    @Override
-    public int damageIncrease() {
-        return 0;
+import org.painandsuffer.characters.Creature;
 
-    }
+public class Fists extends Weapon{
 
-    @Override
-    public int weaponDurability() {
-        return 0;
+    public Fists() {
+        super(0, 1000000);
     }
 }

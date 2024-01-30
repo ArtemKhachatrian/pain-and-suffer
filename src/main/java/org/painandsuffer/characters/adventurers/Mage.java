@@ -1,13 +1,24 @@
-package org.painandsuffer.characters;
+package org.painandsuffer.characters.adventurers;
 
 import org.painandsuffer.MagicUser;
-import org.painandsuffer.items.armor.Armor;
+import org.painandsuffer.items.armor.chest.ChestArmor;
 import org.painandsuffer.items.weapon.Weapon;
 
 
 public class Mage extends Adventurer implements MagicUser {
 
-    public Mage(String name, Weapon weapon, Armor armor) {
+    private int mana = 100;
+
+    public int getMana() {
+        return mana;
+    }
+    public void setMana(int mana){
+        if (mana >= 0){
+            System.out.println("Your out of mana ");
+        }
+        else this.mana = mana;
+    }
+    public Mage(String name, Weapon weapon, ChestArmor armor) {
         super(name, weapon, armor);
     }
 
@@ -15,7 +26,7 @@ public class Mage extends Adventurer implements MagicUser {
         super(name, weapon);
     }
 
-    public Mage(String name, Armor armor) {
+    public Mage(String name, ChestArmor armor) {
         super(name, armor);
     }
 
@@ -25,7 +36,7 @@ public class Mage extends Adventurer implements MagicUser {
     }
     @Override
     public void attack(Adventurer target){
-        int damage = randomDiceRoll(1,20) + getWeapon().damageIncrease();
+        int damage = randomDiceRoll(1,20) + getWeapon().getDamageIncrease();
         if (damage>=5){
             damage -=5;
         }
@@ -48,6 +59,6 @@ public class Mage extends Adventurer implements MagicUser {
     public void useMagic(Adventurer target) {
         int damage = randomDiceRoll();
         target.setHealth(target.getHealth()-damage);
-        System.out.println("Your magic attack" + damage);
+        System.out.println("Your magic attack " + damage);
     }
 }

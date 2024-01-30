@@ -1,65 +1,31 @@
 package org.painandsuffer.battle;
 
-import org.painandsuffer.characters.Adventurer;
+import org.painandsuffer.characters.adventurers.Adventurer;
 
-import java.util.Scanner;
 
 public class Battle {
-    Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        Battle battle = new Battle();
-        battle.provideTwoPlayersPvP();
-    }
-    public void provideTwoPlayersPvP(){
-        greetings();
-        Adventurer playerOne = getAdventurer();
-        Adventurer playerTwo = getAdventurer();
-        providePvP(playerOne,playerTwo);
-    }
+    int roundCounter;
 
-    private void greetings() {
-        System.out.println("Welcome to the game 'Pain and suffer'");
-    }
-
-    private void providePvP(Adventurer playerOne, Adventurer playerTwo){
+    public void providePvP(Adventurer playerOne, Adventurer playerTwo) {
         System.out.println("Battle begins");
-        while (playerOne.getHealth() >0 && playerTwo.getHealth() >0) {
+        fightUntilDeath(playerOne,playerTwo);
+        printWinnersName(playerOne, playerTwo);
+    }
+    private void fightUntilDeath(Adventurer playerOne, Adventurer playerTwo){
+        while (playerOne.getHealth() > 0 && playerTwo.getHealth() > 0) {
+            roundCounter++;
             playerOne.attack(playerTwo);
             playerTwo.attack(playerOne);
         }
-        if (playerOne.getHealth() > 0){
-            System.out.println(playerOne.getName() + "Win!honor and glory to the winner!");
-        }
-        else System.out.println(playerTwo.getName() + "Win!honor and glory to the winner!");
     }
 
-    private Adventurer getAdventurer(){
-        String adventureName = getAdventurerName();
-        AdventurerClass adventurerClass = getAdventurerClass();
-        return AdventurerFactory.createAdventurer(adventureName,adventurerClass);
+    private void printWinnersName(Adventurer playerOne, Adventurer playerTwo) {
+        String winnerName = playerOne.getHealth() > 0 ? playerOne.getName() : playerTwo.getName();
+        System.out.printf("%s Win!honor and glory to the winner!", winnerName);
     }
 
-    private AdventurerClass getAdventurerClass(){
-        System.out.println("Please select your class. You can choose - Warrior, Rogue, Mage");
-        System.out.println("To choose one of the classes, please write it.");
-        try {
-            return AdventurerClass.valueOf(scanner.nextLine());
-        } catch (IllegalArgumentException argumentException){
-            System.out.println("You write incorrect class");
-            return getAdventurerClass();
-        }
+    public int getRoundCounter() {
+        return roundCounter;
     }
-
-    private String getAdventurerName(){
-        System.out.println();
-        return scanner.nextLine();
-    }
-
-
-
-
-
-
-
 }

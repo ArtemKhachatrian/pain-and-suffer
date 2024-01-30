@@ -1,10 +1,10 @@
-package org.painandsuffer.characters;
-import org.painandsuffer.items.armor.Armor;
+package org.painandsuffer.characters.adventurers;
+import org.painandsuffer.items.armor.chest.ChestArmor;
 import org.painandsuffer.items.weapon.Weapon;
 
 public class Warrior extends Adventurer {
 
-    public Warrior(String name, Weapon weapon, Armor armor) {
+    public Warrior(String name, Weapon weapon, ChestArmor armor) {
         super(name, weapon, armor);
     }
 
@@ -12,7 +12,7 @@ public class Warrior extends Adventurer {
         super(name, weapon);
     }
 
-    public Warrior(String name, Armor armor) {
+    public Warrior(String name, ChestArmor armor) {
         super(name, armor);
     }
 

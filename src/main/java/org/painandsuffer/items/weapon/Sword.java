@@ -1,49 +1,13 @@
 package org.painandsuffer.items.weapon;
 
 
-import org.painandsuffer.items.Item;
+import org.painandsuffer.characters.Creature;
 
-public class Sword implements Item, Weapon {
+public class Sword extends Weapon {
 
-    private  int durability = 100;
-
-
-    @Override
-    public void use() {
+    public Sword(){
+        super(15,100);
 
     }
 
-    @Override
-    public void description() {
-
-    }
-
-    @Override
-    public int getDurability() {
-        return durability;
-    }
-
-    @Override
-    public void setDurability(int durability) {
-        if (durability<=0){
-            System.out.println("Your weapon is broken");
-            this.durability = 0;
-        }
-        else {
-            this.durability = durability;
-        }
-
-    }
-
-    @Override
-    public int damageIncrease() {
-        return 15;
-
-    }
-
-    @Override
-    public int weaponDurability() {
-        return 0;
-
-    }
 }

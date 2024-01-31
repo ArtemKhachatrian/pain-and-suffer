@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class BattleTest {
     @Test
     public void whenCharacterAttacked_thenShouldLoseHP(){
-        Adventurer warrior = new Warrior("MegaPiharb");
-        Adventurer mage = new Mage("AnalDestroyer");
+        Adventurer warrior = createNewWarrior();
+        Adventurer mage = createNewMage();
         int initialHealth = mage.getHealth();
         warrior.attack(mage);
         int damagedHealth = mage.getHealth();
@@ -31,8 +31,8 @@ class BattleTest {
 
     @Test
     public void whenCharacterAttackedWithSword_thenShouldLoseHP(){
-        Adventurer warrior = new Warrior("MegaPiharb", new Sword());
-        Adventurer mage = new Mage("AnalDestroyer");
+        Adventurer warrior = createNewWarriorWithSword();
+        Adventurer mage = createNewMage();
         int initialHealth = mage.getHealth();
         warrior.attack(mage);
         int damagedHealth = mage.getHealth();
@@ -43,8 +43,8 @@ class BattleTest {
 
     @Test
     public void whenCharacterAttackedWithArmour_thenShouldLoseHP(){
-        Adventurer warrior = new Warrior("MegaPiharb", new Sword());
-        Adventurer mage = new Mage("AnalDestroyer", new Robe());
+        Adventurer warrior = createNewWarrior();
+        Adventurer mage = createNewMage();
         int initialHealth = mage.getHealth();
         warrior.attack(mage);
         int damagedHealth = mage.getHealth();
@@ -55,18 +55,25 @@ class BattleTest {
     @Test
     public void whenBattleStartsWithCounter(){
         Battle battle = new Battle();
-        Adventurer warrior = new Warrior("MegaPiharb", new Fists());
-        Adventurer mage = new Mage("AnalDestroyer", new Robe());
+        Adventurer warrior = createNewWarrior();
+        Adventurer mage = createNewMage();
         battle.providePvP(warrior,mage);
         assertTrue(battle.getRoundCounter()>0);
     }
 
     private Warrior createNewWarrior(){
-        return Warrior.builder().name("Ares").weapon(new Sword()).chestArmour(new Chainmail()).;
-    }
-    private Rogue createNewRogue(){
-        return Rogue.builder().name("Artemida").weapon(new Dagger()).chestArmour(new LeatherArmour()).build();
+        return Warrior.builder().name("Ares").build();
     }
 
+    private Warrior createNewWarriorWithSword(){
+        return Warrior.builder().name("Ares").weapon(new Sword()).build();
+    }
+
+    private Rogue createNewRogue(){
+        return Rogue.builder().name("Artemis").build();
+    }
+    private Mage createNewMage(){
+        return Mage.builder().name("Alister").build();
+    }
 
 }

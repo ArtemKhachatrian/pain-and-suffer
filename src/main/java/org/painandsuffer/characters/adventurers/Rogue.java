@@ -5,16 +5,13 @@ import org.painandsuffer.items.armour.chest.ChestArmour;
 import org.painandsuffer.items.weapon.Weapon;
 
 public class Rogue extends Adventurer {
-
-
-    public Rogue(String name, Weapon weapon, ArmourSet armourSet) {
+    private Rogue(String name, Weapon weapon, ArmourSet armourSet) {
         super(name, weapon, armourSet);
     }
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     @Override
     public void attack(Adventurer target) {
@@ -27,10 +24,11 @@ public class Rogue extends Adventurer {
     public void defend() {
         System.out.println("Your defend" + randomDiceRoll());
     }
-    public static class Builder extends Adventurer.Builder{
+    public static class Builder extends Adventurer.Builder<Rogue>{
 
         @Override
         public Rogue build() {
+            armourSet = buildArmourSet();
             return new Rogue(name,weapon,armourSet);
         }
     }

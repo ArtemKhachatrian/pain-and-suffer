@@ -8,7 +8,6 @@ import java.util.List;
 public abstract class Creature {
     protected String name;
     private int health = 100;
-
     private int armour = 0;
 
     private final List<Status> statuses = new ArrayList<>();

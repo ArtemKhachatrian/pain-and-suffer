@@ -9,7 +9,7 @@ public class Mage extends Adventurer implements MagicUser {
 
     private int mana = 100;
 
-    public Mage(String name, Weapon weapon, ArmourSet armourSet) {
+    private Mage(String name, Weapon weapon, ArmourSet armourSet) {
         super(name, weapon, armourSet);
     }
 
@@ -23,8 +23,7 @@ public class Mage extends Adventurer implements MagicUser {
         } else this.mana = mana;
     }
 
-    @Override
-    public Adventurer.Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -56,10 +55,11 @@ public class Mage extends Adventurer implements MagicUser {
         System.out.println("Your magic attack " + damage);
     }
 
-    public static class Builder extends Adventurer.Builder{
+    public static class Builder extends Adventurer.Builder<Mage>{
 
         @Override
-        public Adventurer build() {
+        public Mage build() {
+            armourSet = buildArmourSet();
             return new Mage(name,weapon,armourSet);
         }
     }

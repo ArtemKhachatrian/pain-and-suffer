@@ -1,9 +1,11 @@
 package org.painandsuffer.items.armour;
 
 import org.painandsuffer.items.armour.chest.ChestArmour;
+import org.painandsuffer.items.armour.gloves.GlovesArmour;
 
 public class ArmourSet {
     private ChestArmour chestArmour;
+    private GlovesArmour glovesArmour;
 
     private ArmourSet(ChestArmour chestArmour) {
         this.chestArmour = chestArmour;
@@ -11,6 +13,10 @@ public class ArmourSet {
 
     public static ArmourSetBuilder builder() {
         return new ArmourSetBuilder();
+    }
+
+    public int getBonusToArmour() {
+        return chestArmour.getDefend() + glovesArmour.getDefend();
     }
 
     public ChestArmour getChestArmour() {

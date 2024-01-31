@@ -4,7 +4,7 @@ import org.painandsuffer.characters.adventurers.Adventurer;
 import org.painandsuffer.items.Equipable;
 import org.painandsuffer.items.Item;
 
-public class Weapon implements Item, Equipable {
+public abstract class Weapon implements Item, Equipable {
 
     private final int damageIncrease;
 

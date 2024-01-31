@@ -29,12 +29,11 @@ public abstract class Status {
         this.creature = creature;
     }
 
-    private boolean isExpired() {
+    protected boolean isExpired() {
         return roundsDuration < 1;
     }
 
     public void removeIfExpired() {
         if (isExpired()) creature.removeStatus(this);
-
     }
 }

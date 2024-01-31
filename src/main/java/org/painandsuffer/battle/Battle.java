@@ -1,6 +1,8 @@
 package org.painandsuffer.battle;
 
 import org.painandsuffer.battle.status.PublicStatus;
+import org.painandsuffer.battle.status.Status;
+import org.painandsuffer.characters.Creature;
 import org.painandsuffer.characters.adventurers.Adventurer;
 
 public class Battle {
@@ -16,9 +18,20 @@ public class Battle {
     private void fightUntilDeath(Adventurer playerOne, Adventurer playerTwo) {
         while (playerOne.getHealth() > 0 && playerTwo.getHealth() > 0) {
             roundCounter++;
+            checkStatuses(playerOne, playerTwo);
             playerOne.attack(playerTwo);
             playerTwo.attack(playerOne);
 
+        }
+    }
+
+    private void checkStatuses(Creature ...creatures) {
+        for (Creature creature : creatures) {
+            for (Status status : creature.getStatuses()) {
+                status.setRoundsDuration(status.getRoundsDuration() - 1);
+               //TO DO: status.applyStatusCondition();
+                status.removeIfExpired();
+            }
         }
     }
 

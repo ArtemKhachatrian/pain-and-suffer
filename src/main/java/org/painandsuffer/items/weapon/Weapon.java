@@ -1,18 +1,16 @@
 package org.painandsuffer.items.weapon;
 
-import org.painandsuffer.characters.Creature;
 import org.painandsuffer.characters.adventurers.Adventurer;
 import org.painandsuffer.items.Equipable;
 import org.painandsuffer.items.Item;
-import org.painandsuffer.items.SelfUsableItem;
 
 public class Weapon implements Item, Equipable {
 
-    private int damageIncrease;
+    private final int damageIncrease;
 
-    private  int durability;
+    private final int durability;
 
-    public Weapon(int damageIncrease, int durability){
+    public Weapon(int damageIncrease, int durability) {
         this.damageIncrease = damageIncrease;
         this.durability = durability;
     }

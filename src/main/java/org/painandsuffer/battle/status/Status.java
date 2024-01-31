@@ -2,7 +2,7 @@ package org.painandsuffer.battle.status;
 
 import org.painandsuffer.characters.Creature;
 
-public class Status {
+public abstract class Status {
     private int roundsDuration;
 
     private Creature creature;

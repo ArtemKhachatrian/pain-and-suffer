@@ -4,16 +4,14 @@ import org.painandsuffer.battle.status.Status;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public abstract class Creature{
+public abstract class Creature {
     protected String name;
     private int health = 100;
 
+    private int armour = 0;
 
-
-
-    private List<Status> statuses = new ArrayList<>();
+    private final List<Status> statuses = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -39,17 +37,29 @@ public abstract class Creature{
         }
         this.health = health;
     }
+
+    public int getArmour() {
+        return armour;
+    }
+
+    public void setArmour(int armour) {
+        this.armour = armour;
+    }
+
     public List<Status> getStatuses() {
         return statuses;
     }
-    public void addStatus(Status status){
+
+    public void addStatus(Status status) {
         statuses.add(status);
     }
-    public void removeStatus(Status status){
+
+    public void removeStatus(Status status) {
         statuses.remove(status);
     }
-    public void checkIfAnyStatusExpired(){
-        for(Status status : statuses){
+
+    public void checkIfAnyStatusExpired() {
+        for (Status status : statuses) {
             status.removeIfExpired();
         }
     }

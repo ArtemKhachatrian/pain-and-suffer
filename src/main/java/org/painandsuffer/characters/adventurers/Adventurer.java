@@ -2,30 +2,31 @@ package org.painandsuffer.characters.adventurers;
 
 import org.painandsuffer.characters.Creature;
 import org.painandsuffer.items.Equipable;
-import org.painandsuffer.items.armor.Armor;
-import org.painandsuffer.items.armor.chest.ChestArmor;
-import org.painandsuffer.items.armor.chest.Cloth;
+import org.painandsuffer.items.armour.Armour;
+import org.painandsuffer.items.armour.ArmourSet;
+import org.painandsuffer.items.armour.chest.ChestArmour;
+import org.painandsuffer.items.armour.chest.Cloth;
 import org.painandsuffer.items.weapon.Fists;
 import org.painandsuffer.items.weapon.Weapon;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-
 public abstract class Adventurer extends Creature {
-    private Weapon weapon = new Fists();
-    private ChestArmor chestArmor = new Cloth();
-
-
     static final Random random = new Random();
+    private Weapon weapon = new Fists();
+    private ChestArmour chestArmour = new Cloth();
+    private ArmourSet armourSet;
 
     public Adventurer(String name) {
         setName(name);
     }
 
-    public Adventurer(String name, Weapon weapon, ChestArmor chestArmor) {
+    public Adventurer(String name, Weapon weapon, ChestArmour chestArmour) {
         this.name = name;
         this.weapon = weapon;
-        this.chestArmor = chestArmor;
+        this.chestArmour = chestArmour;
     }
 
     public Adventurer(String name, Weapon weapon) {
@@ -33,9 +34,13 @@ public abstract class Adventurer extends Creature {
         this.weapon = weapon;
     }
 
-    public Adventurer(String name, ChestArmor chestArmor) {
+    public Adventurer(String name, ChestArmour chestArmour) {
         this.name = name;
-        this.chestArmor = chestArmor;
+        this.chestArmour = chestArmour;
+    }
+
+    private void increaseArmour() {
+
     }
 
     public Weapon getWeapon() {
@@ -46,20 +51,19 @@ public abstract class Adventurer extends Creature {
         this.weapon = weapon;
     }
 
-    public Armor getChestArmor() {
-        return chestArmor;
+    public Armour getChestArmour() {
+        return chestArmour;
     }
 
-    public void setChestArmor(ChestArmor chestArmor) {
-        this.chestArmor = chestArmor;
+    public void setChestArmour(ChestArmour chestArmour) {
+        this.chestArmour = chestArmour;
     }
 
-
-    public void attack(Adventurer target){
+    public void attack(Adventurer target) {
         int damage = randomDiceRoll() + getWeapon().getDamageIncrease();
-        int armor = target.getChestArmor().getDefend();
-        int damageDecreasedByArmor = damage > armor ? damage - armor : 0;
-        target.setHealth(target.getHealth() - damageDecreasedByArmor);
+        int armour = target.getChestArmour().getDefend();
+        int damageDecreasedByArmour = damage > armour ? damage - armour : 0;
+        target.setHealth(target.getHealth() - damageDecreasedByArmour);
         System.out.println("You attacked " + target.getName() + " for " + damage + " damage");
     }
 
@@ -69,7 +73,7 @@ public abstract class Adventurer extends Creature {
         System.out.println("Your defend" + randomDiceRoll());
     }
 
-    public void equipItem(Equipable item){
+    public void equipItem(Equipable item) {
         item.equipOnAdventurer(this);
     }
 
@@ -80,6 +84,5 @@ public abstract class Adventurer extends Creature {
     public int randomDiceRoll() {
         return random.nextInt(1, 20);
     }
-
 
 }

@@ -1,10 +1,12 @@
 package org.painandsuffer.characters.adventurers;
-import org.painandsuffer.items.armor.chest.ChestArmor;
+
+import org.painandsuffer.battle.status.ProtectiveStance;
+import org.painandsuffer.items.armour.chest.ChestArmour;
 import org.painandsuffer.items.weapon.Weapon;
 
 public class Warrior extends Adventurer {
 
-    public Warrior(String name, Weapon weapon, ChestArmor armor) {
+    public Warrior(String name, Weapon weapon, ChestArmour armor) {
         super(name, weapon, armor);
     }
 
@@ -12,7 +14,7 @@ public class Warrior extends Adventurer {
         super(name, weapon);
     }
 
-    public Warrior(String name, ChestArmor armor) {
+    public Warrior(String name, ChestArmour armor) {
         super(name, armor);
     }
 
@@ -22,6 +24,8 @@ public class Warrior extends Adventurer {
 
     @Override
     public void defend() {
-        System.out.println("Your defend"+ randomDiceRoll() + 10);
+        ProtectiveStance protectiveStanceStatus = new ProtectiveStance(this);
+        this.getStatuses().add(protectiveStanceStatus);
+        protectiveStanceStatus.increaseArmour();
     }
 }

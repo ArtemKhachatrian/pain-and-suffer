@@ -1,6 +1,7 @@
 package org.painandsuffer.characters.adventurers;
 
 import org.painandsuffer.MagicUser;
+import org.painandsuffer.items.armour.ArmourSet;
 import org.painandsuffer.items.armour.chest.ChestArmour;
 import org.painandsuffer.items.weapon.Weapon;
 
@@ -8,21 +9,8 @@ public class Mage extends Adventurer implements MagicUser {
 
     private int mana = 100;
 
-    public Mage(String name, Weapon weapon, ChestArmour armor) {
-        super(name, weapon, armor);
-    }
-
-    public Mage(String name, Weapon weapon) {
-        super(name, weapon);
-    }
-
-    public Mage(String name, ChestArmour armor) {
-        super(name, armor);
-    }
-
-    public Mage(String name) {
-        super(name);
-
+    public Mage(String name, Weapon weapon, ArmourSet armourSet) {
+        super(name, weapon, armourSet);
     }
 
     public int getMana() {
@@ -33,6 +21,11 @@ public class Mage extends Adventurer implements MagicUser {
         if (mana >= 0) {
             System.out.println("Your out of mana ");
         } else this.mana = mana;
+    }
+
+    @Override
+    public Adventurer.Builder builder() {
+        return new Builder();
     }
 
     @Override
@@ -61,5 +54,13 @@ public class Mage extends Adventurer implements MagicUser {
         int damage = randomDiceRoll();
         target.setHealth(target.getHealth() - damage);
         System.out.println("Your magic attack " + damage);
+    }
+
+    public static class Builder extends Adventurer.Builder{
+
+        @Override
+        public Adventurer build() {
+            return new Mage(name,weapon,armourSet);
+        }
     }
 }

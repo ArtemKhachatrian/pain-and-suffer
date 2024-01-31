@@ -10,6 +10,6 @@ public abstract class ChestArmour extends Armour {
 
     @Override
     public void equipOnAdventurer(Adventurer adventurer) {
-        adventurer.setChestArmour(this);
+        adventurer.getArmourSet().setChestArmour(this);
     }
 }

@@ -1,5 +1,6 @@
 package org.painandsuffer.battle;
 
+import org.painandsuffer.battle.status.PublicStatus;
 import org.painandsuffer.characters.adventurers.Adventurer;
 
 public class Battle {
@@ -17,6 +18,7 @@ public class Battle {
             roundCounter++;
             playerOne.attack(playerTwo);
             playerTwo.attack(playerOne);
+
         }
     }
 

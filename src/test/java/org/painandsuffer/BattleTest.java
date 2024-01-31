@@ -4,12 +4,16 @@ import org.junit.jupiter.api.Test;
 import org.painandsuffer.battle.Battle;
 import org.painandsuffer.characters.adventurers.Adventurer;
 import org.painandsuffer.characters.adventurers.Mage;
+import org.painandsuffer.characters.adventurers.Rogue;
 import org.painandsuffer.characters.adventurers.Warrior;
 import org.painandsuffer.items.armour.ArmourSet;
 import org.painandsuffer.items.armour.chest.Chainmail;
+import org.painandsuffer.items.armour.chest.LeatherArmour;
 import org.painandsuffer.items.armour.chest.Robe;
+import org.painandsuffer.items.weapon.Dagger;
 import org.painandsuffer.items.weapon.Fists;
 import org.painandsuffer.items.weapon.Sword;
+import org.painandsuffer.items.weapon.Weapon;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,6 +59,13 @@ class BattleTest {
         Adventurer mage = new Mage("AnalDestroyer", new Robe());
         battle.providePvP(warrior,mage);
         assertTrue(battle.getRoundCounter()>0);
+    }
+
+    private Warrior createNewWarrior(){
+        return Warrior.builder().name("Ares").weapon(new Sword()).chestArmour(new Chainmail()).;
+    }
+    private Rogue createNewRogue(){
+        return Rogue.builder().name("Artemida").weapon(new Dagger()).chestArmour(new LeatherArmour()).build();
     }
 
 

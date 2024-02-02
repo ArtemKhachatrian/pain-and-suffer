@@ -34,6 +34,5 @@ public abstract class Status {
 
     public void removeIfExpired() {
         if (isExpired()) creature.removeStatus(this);
-
     }
 }

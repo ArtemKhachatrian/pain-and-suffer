@@ -14,15 +14,30 @@ public class ProtectiveStance extends Status {
         super(ROUNDS_DURATION, creature);
     }
 
-    public void increaseArmour() {
-        getCreature().setArmour(calculateNewArmourValue());
+    @Override
+    public void removeIfExpired() {
+        super.removeIfExpired();
+        if (isExpired()) getCreature().setArmour(calculateDecreasedArmourValue());
     }
 
-    private int calculateNewArmourValue() {
+    public void increaseArmour() {
+        getCreature().setArmour(calculateIncreasedArmourValue());
+    }
+
+    private int calculateIncreasedArmourValue() {
         BigDecimal bigDecimalArmour = new BigDecimal(getCreature().getArmour());
         return bigDecimalArmour
                 .multiply(ArmourMultiplier)
                 .round(new MathContext(0, RoundingMode.HALF_UP))
                 .intValue();
     }
+
+    private int calculateDecreasedArmourValue() {
+        BigDecimal bigDecimalArmour = new BigDecimal(getCreature().getArmour());
+        return bigDecimalArmour
+                .divide(ArmourMultiplier)
+                .round(new MathContext(0, RoundingMode.HALF_UP))
+                .intValue();
+    }
+
 }

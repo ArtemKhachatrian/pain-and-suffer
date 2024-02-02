@@ -43,7 +43,6 @@ public abstract class Adventurer extends Creature {
         this.armourSet = armourSet;
     }
 
-
     public void attack(Creature target) {
         int damage = randomDiceRoll() + getWeapon().getDamageIncrease();
         int armour = target.getArmour();
@@ -52,8 +51,10 @@ public abstract class Adventurer extends Creature {
             int damageDecreasedByArmour = residualAttack > armour ? residualAttack - armour : 0;
             target.setHealth(getHealth()-damageDecreasedByArmour);
             System.out.println("You attacked " + target.getName() + " for " + residualAttack + " damage");
-        } else target.setMagicProtection(target.getMagicProtection() - damage);
-        System.out.println("You attacked " + target.getName() + "Magic shield for " + damage + " damage");
+        } else {
+            target.setMagicProtection(target.getMagicProtection() - damage);
+            System.out.println("You attacked " + target.getName() + ". Magic shield took " + damage + " damage");
+        }
     }
 
     public abstract void defend();

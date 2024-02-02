@@ -16,7 +16,9 @@ public class ArmourSet {
     }
 
     public int getBonusToArmour() {
-        return chestArmour.getDefend() + glovesArmour.getDefend();
+        int bonusToArmour = chestArmour != null ? chestArmour.getDefend() : 0;
+        bonusToArmour += glovesArmour != null ? glovesArmour.getDefend() : 0;
+        return bonusToArmour;
     }
 
     public ChestArmour getChestArmour() {

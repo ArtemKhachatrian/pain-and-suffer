@@ -43,8 +43,10 @@ public class Mage extends Adventurer implements MagicUser {
             int damageDecreasedByArmour = damage > armour ? damage - armour : 0;
             target.setHealth(target.getHealth()+getMagicProtection() - damageDecreasedByArmour);
             System.out.println("You attacked " + target.getName() + " for " + damage + " damage");}
-        else target.setMagicProtection(- damage);
-        System.out.println("You attacked " + target.getName() + "Magic shield for " + damage + " damage");
+        else {
+            target.setMagicProtection(-damage);
+            System.out.println("You attacked " + target.getName() + "Magic shield for " + damage + " damage");
+        }
     }
 
     @Override

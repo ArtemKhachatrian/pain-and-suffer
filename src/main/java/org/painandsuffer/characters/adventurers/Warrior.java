@@ -17,7 +17,7 @@ public class Warrior extends Adventurer {
 
     @Override
     public void attack(Creature target) {
-        boolean isCritical = randomDiceRoll(1,1000)>75;
+        boolean isCritical = randomDiceRoll(1,1000) < 75;
         int damage = randomDiceRoll() + getWeapon().getDamageIncrease();
         damage = isCritical ? damage * 2 : damage;
         int armour = target.getArmour();

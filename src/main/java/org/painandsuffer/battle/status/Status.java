@@ -10,7 +10,6 @@ public abstract class Status {
     public Status(int roundsDuration, Creature creature) {
         this.roundsDuration = roundsDuration;
         this.creature = creature;
-        creature.addStatus(this);
     }
 
     public int getRoundsDuration() {
@@ -29,7 +28,7 @@ public abstract class Status {
         this.creature = creature;
     }
 
-    private boolean isExpired() {
+    protected boolean isExpired() {
         return roundsDuration < 1;
     }
 

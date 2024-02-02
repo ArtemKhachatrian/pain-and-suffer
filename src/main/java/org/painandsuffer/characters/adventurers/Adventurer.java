@@ -44,12 +44,16 @@ public abstract class Adventurer extends Creature {
     }
 
 
-    public void attack(Adventurer target) {
+    public void attack(Creature target) {
         int damage = randomDiceRoll() + getWeapon().getDamageIncrease();
         int armour = target.getArmour();
-        int damageDecreasedByArmour = damage > armour ? damage - armour : 0;
-       target.setHealth(target.getHealth() - damageDecreasedByArmour);
-        System.out.println("You attacked " + target.getName() + " for " + damage + " damage");
+        if (damage > target.getMagicProtection()) {
+            int residualAttack  = damage - target.getMagicProtection();
+            int damageDecreasedByArmour = residualAttack > armour ? residualAttack - armour : 0;
+            target.setHealth(getHealth()-damageDecreasedByArmour);
+            System.out.println("You attacked " + target.getName() + " for " + residualAttack + " damage");
+        } else target.setMagicProtection(target.getMagicProtection() - damage);
+        System.out.println("You attacked " + target.getName() + "Magic shield for " + damage + " damage");
     }
 
     public abstract void defend();
@@ -73,27 +77,29 @@ public abstract class Adventurer extends Creature {
         protected GlovesArmour glovesArmour;
         protected ArmourSet armourSet;
 
-        public Builder<T> name(String name){
+        public Builder<T> name(String name) {
             this.name = name;
             return this;
         }
-        public Builder<T> weapon(Weapon weapon){
+
+        public Builder<T> weapon(Weapon weapon) {
             this.weapon = weapon;
             return this;
         }
-        public Builder<T> chestArmour(ChestArmour chestArmour){
+
+        public Builder<T> chestArmour(ChestArmour chestArmour) {
             this.chestArmour = chestArmour;
             return this;
         }
 
-        public Builder<T> glovesArmour(GlovesArmour glovesArmour){
+        public Builder<T> glovesArmour(GlovesArmour glovesArmour) {
             this.glovesArmour = glovesArmour;
             return this;
         }
 
         public abstract T build();
 
-        protected ArmourSet buildArmourSet(){
+        protected ArmourSet buildArmourSet() {
             return ArmourSet.builder().chestArmour(chestArmour).build();
         }
     }

@@ -76,4 +76,16 @@ class BattleTest {
         return Mage.builder().name("Alister").build();
     }
 
+    @Test
+    public void whenCharacterDefends(){
+        Battle battle = new Battle();
+        Adventurer warrior = createNewRogue();
+        Adventurer mage = createNewMage();
+        int armourWithoutDefend = warrior.getArmourSet().getBonusToArmour();
+        battle.providePvP(warrior,mage);
+        warrior.defend();
+        int armourWithDefend = warrior.getArmourSet().getBonusToArmour();
+        assertTrue(armourWithDefend > armourWithoutDefend);
+    }
+
 }

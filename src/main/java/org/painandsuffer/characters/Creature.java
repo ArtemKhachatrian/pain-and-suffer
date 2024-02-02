@@ -10,6 +10,8 @@ public abstract class Creature {
     private int health = 100;
     private int armour = 0;
 
+    private int magicProtection = 0;
+
     private final List<Status> statuses = new ArrayList<>();
 
     public String getName() {
@@ -43,6 +45,14 @@ public abstract class Creature {
 
     public void setArmour(int armour) {
         this.armour = armour;
+    }
+
+    public int getMagicProtection() {
+        return magicProtection;
+    }
+
+    public void setMagicProtection(int magicProtection) {
+        this.magicProtection = magicProtection;
     }
 
     public List<Status> getStatuses() {

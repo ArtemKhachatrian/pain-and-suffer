@@ -1,13 +1,20 @@
 package org.painandsuffer.characters.adventurers;
 
-import org.painandsuffer.MagicUser;
+import org.painandsuffer.characters.Creature;
+import org.painandsuffer.magic.MagicUser;
+import org.painandsuffer.battle.status.CooldownStatus;
+import org.painandsuffer.battle.status.MagicShield;
+import org.painandsuffer.battle.status.Status;
 import org.painandsuffer.items.armour.ArmourSet;
-import org.painandsuffer.items.armour.chest.ChestArmour;
 import org.painandsuffer.items.weapon.Weapon;
 
 public class Mage extends Adventurer implements MagicUser {
 
     private int mana = 100;
+
+
+
+    private static final int MANA_COST_PER_SPELL = 10;
 
     private Mage(String name, Weapon weapon, ArmourSet armourSet) {
         super(name, weapon, armourSet);
@@ -28,32 +35,44 @@ public class Mage extends Adventurer implements MagicUser {
     }
 
     @Override
-    public void attack(Adventurer target) {
+    public void attack(Creature target) {
         int damage = randomDiceRoll(1, 20) + getWeapon().getDamageIncrease();
-        if (damage >= 5) {
-            damage -= 5;
-        }
-        target.setHealth(target.getHealth() - damage);
-        System.out.println("Your attack" + damage);
+        int armour = target.getArmour();
+        if (damage >= 5) {damage -= 5;}
+        if (damage>getMagicProtection()){
+            int damageDecreasedByArmour = damage > armour ? damage - armour : 0;
+            target.setHealth(target.getHealth()+getMagicProtection() - damageDecreasedByArmour);
+            System.out.println("You attacked " + target.getName() + " for " + damage + " damage");}
+        else target.setMagicProtection(- damage);
+        System.out.println("You attacked " + target.getName() + "Magic shield for " + damage + " damage");
     }
 
     @Override
     public void defend() {
-        int diceResult = randomDiceRoll(1, 10);
-        if (diceResult >= 3) {
-            diceResult -= 3;
-        }
-
-        System.out.println("Your defend" + diceResult);
+        MagicShield magicShield = new MagicShield(this);
+        this.getStatuses().add(magicShield);
+        magicShield.applyMagicProtection();
 
     }
 
     @Override
-    public void useMagic(Adventurer target) {
-        int damage = randomDiceRoll();
-        target.setHealth(target.getHealth() - damage);
-        System.out.println("Your magic attack " + damage);
+    public void useMagic(Creature target) {
+
+        if (!isOnCooldown() && mana >= MANA_COST_PER_SPELL){
+            int damage = randomDiceRoll(5,30);
+            target.setHealth(target.getHealth() - damage);
+            setMana(getMana()-MANA_COST_PER_SPELL);
+            addStatus(new CooldownStatus(1,this));
+            System.out.println("Your magic attack " + damage);
+        }
+
+
     }
+
+    private boolean isOnCooldown(){
+        return getStatuses().stream().anyMatch(obj -> obj.getClass().equals(CooldownStatus.class));
+    }
+
 
     public static class Builder extends Adventurer.Builder<Mage>{
 

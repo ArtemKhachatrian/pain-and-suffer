@@ -1,6 +1,5 @@
 package org.painandsuffer.battle;
 
-import org.painandsuffer.battle.status.PublicStatus;
 import org.painandsuffer.characters.adventurers.Adventurer;
 
 public class Battle {

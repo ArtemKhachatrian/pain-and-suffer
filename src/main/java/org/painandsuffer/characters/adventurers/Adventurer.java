@@ -44,17 +44,31 @@ public abstract class Adventurer extends Creature {
     }
 
     public void attack(Creature target) {
-        int damage = randomDiceRoll() + getWeapon().getDamageIncrease();
-        int armour = target.getArmour();
-        if (damage > target.getMagicProtection()) {
-            int residualAttack  = damage - target.getMagicProtection();
-            int damageDecreasedByArmour = residualAttack > armour ? residualAttack - armour : 0;
-            target.setHealth(getHealth()-damageDecreasedByArmour);
-            System.out.println("You attacked " + target.getName() + " for " + residualAttack + " damage");
-        } else {
-            target.setMagicProtection(target.getMagicProtection() - damage);
-            System.out.println("You attacked " + target.getName() + ". Magic shield took " + damage + " damage");
+        boolean isMissed = randomDiceRoll(1, 1000) > target.getEvasionRate();
+        if (isMissed) {
+            int damage = randomDiceRoll() + getWeapon().getDamageIncrease();
+            int armour = target.getArmour();
+            if (damage > target.getMagicProtection()) {
+                int residualAttack = damage - target.getMagicProtection();
+                int damageDecreasedByArmour = residualAttack > armour ? residualAttack - armour : 0;
+                target.setHealth(getHealth() - damageDecreasedByArmour);
+                System.out.println("You attacked " + target.getName() + " for " + residualAttack + " damage");
+            } else {
+                target.setMagicProtection(target.getMagicProtection() - damage);
+                System.out.println("You attacked " + target.getName() + ". Magic shield took " + damage + " damage");
+            }
         }
+    }
+
+    private boolean isMissed(Creature creature) {
+        return randomDiceRoll(1, 1000) > 100;
+    }
+
+    protected boolean checkIsMissed(Creature creature) {
+        if (isMissed(creature)) {
+            System.out.println("You missed!");
+            return true;
+        } else return false;
     }
 
     public abstract void defend();

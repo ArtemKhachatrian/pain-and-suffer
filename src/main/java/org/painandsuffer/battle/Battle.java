@@ -27,9 +27,9 @@ public class Battle {
     private void checkStatuses(Creature ...creatures) {
         for (Creature creature : creatures) {
             for (Status status : creature.getStatuses()) {
+                status.removeIfExpired();
                 status.setRoundsDuration(status.getRoundsDuration() - 1);
                //TO DO: status.applyStatusCondition();
-                status.removeIfExpired();
             }
         }
     }

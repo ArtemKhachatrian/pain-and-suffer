@@ -79,11 +79,12 @@ class BattleTest {
     @Test
     public void whenCharacterDefends(){
         Battle battle = new Battle();
-        Adventurer warrior = createNewRogue();
+        Adventurer warrior = createNewWarrior();
         Adventurer mage = createNewMage();
+        warrior.getArmourSet().setChestArmour(new Chainmail());
         int armourWithoutDefend = warrior.getArmourSet().getBonusToArmour();
-        battle.providePvP(warrior,mage);
         warrior.defend();
+        battle.providePvP(warrior,mage);
         int armourWithDefend = warrior.getArmourSet().getBonusToArmour();
         assertTrue(armourWithDefend > armourWithoutDefend);
     }

@@ -1,21 +1,82 @@
 package org.painandsuffer.characters;
 
-import org.painandsuffer.battle.status.Status;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.painandsuffer.battle.statuses.Status;
+import org.painandsuffer.items.Equipable;
+import org.painandsuffer.items.armour.ArmourSet;
+import org.painandsuffer.items.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public abstract class Creature {
-    protected String name;
-    private int health = 100;
-    private int armour = 0;
-    private int magicProtection = 0;
-    private int evasionRate = 0;
-
+    static final Random random = new Random();
     private final List<Status> statuses = new ArrayList<>();
+    private String name;
+    private int health;
+    private int defence;
+    private int magicProtection;
+    private int evasionRate;
+    private int damage;
+    private Weapon weapon;
+    private ArmourSet armourSet;
 
-    public String getName() {
-        return name;
+    protected void getArmourBonus() {
+        setDefence(getDefence() + armourSet.getBonusToArmour());
+    }
+
+    public void attack(Creature target) {
+        if (!isMissed(target)) {
+            int damage = getCurrentBaseDamage();
+            if (isMagicProtectionGonnaBreak(target, damage)) {
+                attackDestroyingMagicProtection(target, damage);
+            } else {
+                attackMagicProtection(target, damage);
+            }
+        }
+    }
+
+    private boolean checkEvasionRoll(Creature creature) {
+        return randomDiceRoll(1, 100) > creature.getEvasionRate();
+    }
+
+    private boolean isMissed(Creature creature) {
+        if (checkEvasionRoll(creature)) {
+            System.out.println(creature.getName() + " evades your attack!");
+            return true;
+        } else return false;
+    }
+
+    private int getCurrentBaseDamage() {
+        return randomDiceRoll(0, getDamage()) + getWeapon().getDamage();
+    }
+
+    private boolean isMagicProtectionGonnaBreak(Creature target, int damageToTarget) {
+        return damageToTarget > target.getMagicProtection();
+    }
+
+    private void attackDestroyingMagicProtection(Creature target, int damageToTarget) {
+        int residualAttack = damageToTarget - target.getMagicProtection();
+        int damageDecreasedByArmour = residualAttack > target.getDefence() ? residualAttack - target.getDefence() : 0;
+        target.setHealth(getHealth() - damageDecreasedByArmour);
+        System.out.println("You attacked " + target.getName() + " for " + residualAttack + " damage");
+    }
+
+    private void attackMagicProtection(Creature target, int damageToTarget) {
+        target.setMagicProtection(target.getMagicProtection() - damageToTarget);
+        System.out.println("You attacked " + target.getName() + ". Magic shield took " + damageToTarget + " damage");
+    }
+
+    public abstract void defend();
+
+    public void equipItem(Equipable item) {
+        item.equipItem(this);
     }
 
     public void setName(String name) {
@@ -24,10 +85,6 @@ public abstract class Creature {
             return;
         }
         this.name = name;
-    }
-
-    public int getHealth() {
-        return health;
     }
 
     public void setHealth(int health) {
@@ -39,34 +96,6 @@ public abstract class Creature {
         this.health = health;
     }
 
-    public int getArmour() {
-        return armour;
-    }
-
-    public void setArmour(int armour) {
-        this.armour = armour;
-    }
-
-    public int getMagicProtection() {
-        return magicProtection;
-    }
-
-    public void setMagicProtection(int magicProtection) {
-        this.magicProtection = magicProtection;
-    }
-
-    public int getEvasionRate() {
-        return evasionRate;
-    }
-
-    public void setEvasionRate(int evasionRate) {
-        this.evasionRate = evasionRate;
-    }
-
-    public List<Status> getStatuses() {
-        return statuses;
-    }
-
     public void addStatus(Status status) {
         statuses.add(status);
     }
@@ -75,9 +104,68 @@ public abstract class Creature {
         statuses.remove(status);
     }
 
-    public void checkIfAnyStatusExpired() {
-        for (Status status : statuses) {
-            status.removeIfExpired();
+    protected int getAttackRoll(int origin, int bound) {
+        return randomDiceRoll(origin, bound);
+    }
+
+    protected boolean isEvaded() {
+        return randomDiceRoll(0, 100) > evasionRate;
+    }
+
+    public int randomDiceRoll(int origin, int bound) {
+        return random.nextInt(origin, bound);
+    }
+
+    public abstract static class Builder<T extends Creature> {
+        protected String name;
+        protected int health;
+        protected int defence;
+        protected int magicProtection;
+        protected int evasionRate;
+        protected int damage;
+        protected Weapon weapon;
+        protected ArmourSet armourSet;
+
+        public Builder<T> name(String name) {
+            this.name = name;
+            return this;
         }
+
+        public Builder<T> health(int health) {
+            this.health = health;
+            return this;
+        }
+
+        public Builder<T> defence(int defence) {
+            this.defence = defence;
+            return this;
+        }
+
+        public Builder<T> magicProtection(int magicProtection) {
+            this.magicProtection = magicProtection;
+            return this;
+        }
+
+        public Builder<T> evasionRate(int evasionRate) {
+            this.evasionRate = evasionRate;
+            return this;
+        }
+
+        public Builder<T> damage(int damage) {
+            this.damage = damage;
+            return this;
+        }
+
+        public Builder<T> weapon(Weapon weapon) {
+            this.weapon = weapon;
+            return this;
+        }
+
+        public Builder<T> armourSet(ArmourSet armourSet) {
+            this.armourSet = armourSet;
+            return this;
+        }
+
+        public abstract T build();
     }
 }

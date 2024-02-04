@@ -1,4 +1,4 @@
-package org.painandsuffer.items.weapon;
+package org.painandsuffer.items.weapons;
 
 public class Sword extends Weapon {
 

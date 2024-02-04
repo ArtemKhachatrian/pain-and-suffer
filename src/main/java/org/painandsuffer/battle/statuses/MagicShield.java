@@ -1,16 +1,11 @@
-package org.painandsuffer.battle.status;
+package org.painandsuffer.battle.statuses;
 
 import org.painandsuffer.characters.Creature;
-
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 public class MagicShield extends Status {
 
     public static final int ROUNDS_DURATION = 2;
     public static final int PROTECTION_AMOUNT = 50;
-
 
     public MagicShield(Creature creature) {
         super(ROUNDS_DURATION, creature);
@@ -29,6 +24,9 @@ public class MagicShield extends Status {
     private boolean isActive() {
         return getCreature().getStatuses().stream().anyMatch(obj -> obj.getClass().equals(MagicShield.class));
     }
+
     @Override
-    protected boolean isExpired(){return getRoundsDuration()<= 0 || getCreature().getMagicProtection() <= 0;}
+    protected boolean isExpired() {
+        return getRoundsDuration() <= 0 || getCreature().getMagicProtection() <= 0;
+    }
 }

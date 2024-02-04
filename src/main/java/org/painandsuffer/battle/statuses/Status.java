@@ -1,4 +1,4 @@
-package org.painandsuffer.battle.status;
+package org.painandsuffer.battle.statuses;
 
 import org.painandsuffer.characters.Creature;
 

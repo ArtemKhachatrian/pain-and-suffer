@@ -1,4 +1,4 @@
-package org.painandsuffer.battle.status;
+package org.painandsuffer.battle.statuses;
 
 import org.painandsuffer.characters.Creature;
 
@@ -19,7 +19,6 @@ public class Evasive extends Status {
     public int calculateNewEvasiveAmount() {
         return getCreature().getEvasionRate() + EVASION_AMOUNT;
     }
-
 
     private boolean isActive() {
         return getCreature().getStatuses().stream().anyMatch(obj -> obj.getClass().equals(MagicShield.class));

@@ -4,20 +4,20 @@ import org.painandsuffer.items.Equipable;
 import org.painandsuffer.items.Item;
 
 public abstract class Armour implements Item, Equipable {
-    private int defend;
+    private int defence;
     private int armourDurability;
 
-    public Armour(int defend, int armourDurability) {
-        setDefend(defend);
+    public Armour(int defence, int armourDurability) {
+        setDefence(defence);
         setArmourDurability(armourDurability);
     }
 
-    public int getDefend() {
-        return defend;
+    public int getDefence() {
+        return defence;
     }
 
-    public void setDefend(int defend) {
-        this.defend = defend;
+    public void setDefence(int defence) {
+        this.defence = defence;
     }
 
     public int getArmourDurability() {
@@ -32,6 +32,21 @@ public abstract class Armour implements Item, Equipable {
         return "This is just an armor";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Armour armour)) return false;
+
+        if (defence != armour.defence) return false;
+        return armourDurability == armour.armourDurability;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = defence;
+        result = 31 * result + armourDurability;
+        return result;
+    }
 }
 
 

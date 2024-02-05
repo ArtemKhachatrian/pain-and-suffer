@@ -24,6 +24,7 @@ public abstract class Creature {
     private int magicProtection;
     private int evasionRate;
     private int damage;
+    private int criticalRate;
     private Weapon weapon;
     private ArmourSet armourSet;
 
@@ -32,45 +33,9 @@ public abstract class Creature {
     }
 
     public void attack(Creature target) {
-        if (!isMissed(target)) {
-            int damage = getCurrentBaseDamage();
-            if (isMagicProtectionGonnaBreak(target, damage)) {
-                attackDestroyingMagicProtection(target, damage);
-            } else {
-                attackMagicProtection(target, damage);
-            }
-        }
-    }
-
-    private boolean checkEvasionRoll(Creature creature) {
-        return randomDiceRoll(1, 100) > creature.getEvasionRate();
-    }
-
-    private boolean isMissed(Creature creature) {
-        if (checkEvasionRoll(creature)) {
-            System.out.println(creature.getName() + " evades your attack!");
-            return true;
-        } else return false;
-    }
-
-    private int getCurrentBaseDamage() {
-        return randomDiceRoll(0, getDamage()) + getWeapon().getDamage();
-    }
-
-    private boolean isMagicProtectionGonnaBreak(Creature target, int damageToTarget) {
-        return damageToTarget > target.getMagicProtection();
-    }
-
-    private void attackDestroyingMagicProtection(Creature target, int damageToTarget) {
-        int residualAttack = damageToTarget - target.getMagicProtection();
-        int damageDecreasedByArmour = residualAttack > target.getDefence() ? residualAttack - target.getDefence() : 0;
-        target.setHealth(getHealth() - damageDecreasedByArmour);
-        System.out.println("You attacked " + target.getName() + " for " + residualAttack + " damage");
-    }
-
-    private void attackMagicProtection(Creature target, int damageToTarget) {
-        target.setMagicProtection(target.getMagicProtection() - damageToTarget);
-        System.out.println("You attacked " + target.getName() + ". Magic shield took " + damageToTarget + " damage");
+        if (!isMissed(target)) return;
+        int damage =isCriticalDamage() ? getCurrentBaseDamage()*2 : getCurrentBaseDamage();
+        baseAttack(target,damage);
     }
 
     public abstract void defend();
@@ -104,16 +69,58 @@ public abstract class Creature {
         statuses.remove(status);
     }
 
-    protected int getAttackRoll(int origin, int bound) {
-        return randomDiceRoll(origin, bound);
-    }
-
-    protected boolean isEvaded() {
-        return randomDiceRoll(0, 100) > evasionRate;
-    }
-
     public int randomDiceRoll(int origin, int bound) {
-        return random.nextInt(origin, bound);
+        return random.nextInt(1, 20);
+    }
+
+    private boolean isMissed(Creature creature) {
+        if (checkEvasionRoll(creature)) {
+            System.out.println(creature.getName() + " evades your attack!");
+            return true;
+        } else return false;
+    }
+
+    private boolean checkEvasionRoll(Creature creature) {
+        return randomDiceRoll(1, 100) > creature.getEvasionRate();
+    }
+
+    private boolean isCriticalDamage() {
+        if (checkCriticalRoll()) {
+            System.out.println(getName() + "has critical attack");
+            return true;
+        } else return false;
+    }
+
+    private boolean checkCriticalRoll() {
+        return randomDiceRoll(1, 100) > getCriticalRate();
+    }
+
+    private void baseAttack(Creature target, int damage) {
+        if (isMagicProtectionGonnaBreak(target, damage)) {
+            attackDestroyingMagicProtection(target, damage);
+        } else {
+            attackMagicProtection(target, damage);
+        }
+    }
+
+    private int getCurrentBaseDamage() {
+        return randomDiceRoll(0, getDamage()) + getWeapon().getDamage();
+    }
+
+    private boolean isMagicProtectionGonnaBreak(Creature target, int damageToTarget) {
+        return damageToTarget > target.getMagicProtection();
+    }
+
+    private void attackDestroyingMagicProtection(Creature target, int damageToTarget) {
+        int residualAttack = damageToTarget - target.getMagicProtection();
+        int damageDecreasedByArmour = residualAttack > target.getDefence() ? residualAttack - target.getDefence() : 0;
+        target.setHealth(getHealth() - damageDecreasedByArmour);
+        System.out.println("You attacked " + target.getName() + " for " + residualAttack + " damage");
+    }
+
+    private void attackMagicProtection(Creature target, int damageToTarget) {
+        target.setMagicProtection(target.getMagicProtection() - damageToTarget);
+        System.out.println("You attacked " + target.getName() + ". Magic shield took " + damageToTarget + " damage");
     }
 
     public abstract static class Builder<T extends Creature> {
@@ -123,6 +130,7 @@ public abstract class Creature {
         protected int magicProtection;
         protected int evasionRate;
         protected int damage;
+        protected int criticalRate;
         protected Weapon weapon;
         protected ArmourSet armourSet;
 
@@ -153,6 +161,11 @@ public abstract class Creature {
 
         public Builder<T> damage(int damage) {
             this.damage = damage;
+            return this;
+        }
+
+        public Builder<T> criticalRate(int criticalRate) {
+            this.criticalRate = criticalRate;
             return this;
         }
 

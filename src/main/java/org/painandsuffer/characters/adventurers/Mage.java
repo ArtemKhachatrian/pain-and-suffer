@@ -15,8 +15,9 @@ public class Mage extends Adventurer implements MagicUser {
 
     private int mana;
 
-    public Mage(String name, int health, int defence, int magicProtection, int evasionRate, int damage, Weapon weapon, ArmourSet armourSet, int mana) {
-        super(name, health, defence, magicProtection, evasionRate, damage, weapon, armourSet);
+    public Mage(String name, int health, int defence, int magicProtection, int evasionRate, int damage,
+                int criticalRate,Weapon weapon, ArmourSet armourSet, int mana) {
+        super(name, health, defence, magicProtection, evasionRate, damage,criticalRate, weapon, armourSet);
         this.mana = mana;
     }
 
@@ -30,25 +31,7 @@ public class Mage extends Adventurer implements MagicUser {
         } else this.mana = mana;
     }
 
-    @Override
-    public void attack(Creature target) {
-        boolean isMissed = randomDiceRoll(1, 1000) > target.getEvasionRate();
-        if (isMissed) {
-            int damage = randomDiceRoll(1, 20) + getWeapon().getDamage();
-            int armour = target.getDefence();
-            if (damage >= 5) {
-                damage -= 5;
-            }
-            if (damage > getMagicProtection()) {
-                int damageDecreasedByArmour = damage > armour ? damage - armour : 0;
-                target.setHealth(target.getHealth() + getMagicProtection() - damageDecreasedByArmour);
-                System.out.println("You attacked " + target.getName() + " for " + damage + " damage");
-            } else {
-                target.setMagicProtection(target.getMagicProtection() - damage);
-                System.out.println("You attacked " + target.getName() + "Magic shield for " + damage + " damage");
-            }
-        }
-    }
+
 
     @Override
     public void defend() {
@@ -84,7 +67,7 @@ public class Mage extends Adventurer implements MagicUser {
         @Override
         public Mage build() {
             setAdventurerDefaults();
-            return new Mage(name, health, defence, magicProtection, evasionRate, damage, weapon, armourSet, mana);
+            return new Mage(name, health, defence, magicProtection, evasionRate, damage,criticalRate, weapon, armourSet, mana);
         }
     }
 }

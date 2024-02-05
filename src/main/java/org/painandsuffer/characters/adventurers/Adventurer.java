@@ -8,8 +8,9 @@ import org.painandsuffer.items.weapons.Weapon;
 
 public abstract class Adventurer extends Creature {
 
-    public Adventurer(String name, int health, int defence, int magicProtection, int evasionRate, int damage, Weapon weapon, ArmourSet armourSet) {
-        super(name, health, defence, magicProtection, evasionRate, damage, weapon, armourSet);
+    public Adventurer(String name, int health, int defence, int magicProtection, int evasionRate, int damage,
+                      int criticalRate,Weapon weapon, ArmourSet armourSet) {
+        super(name, health, defence, magicProtection, evasionRate, damage,criticalRate,weapon, armourSet);
         getArmourBonus();
     }
 

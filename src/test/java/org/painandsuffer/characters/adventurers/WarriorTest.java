@@ -13,8 +13,7 @@ import org.painandsuffer.items.weapons.Weapon;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class WarriorTest {
 
@@ -118,6 +117,32 @@ class WarriorTest {
         warrior.defend();
 
         assertEquals(expectedDefence, warrior.getDefence());
+    }
+
+    @Test
+    public void whenWarriorWithSwordUseAttackToTargetWithNoArmor_thenTargetShouldLoseHP(){
+        Warrior warrior = Warrior.builder().weapon(new Sword()).build();
+        Warrior target = Warrior.builder().build();
+        assertNotNull(warrior);
+        assertNotNull(target);
+        int currentTargetHP = target.getHealth();
+        warrior.attack(target);
+        int changedTargetHP = target.getHealth();
+        assertNotEquals(currentTargetHP,changedTargetHP);
+        assertTrue(currentTargetHP>changedTargetHP);
+    }
+
+    @Test
+    public void whenWarriorWithDefaultWeaponAttackTargetWithCriticalAttack_thenTargetShouldLoseHP(){
+        Warrior warrior = Warrior.builder().criticalRate(100).build();
+        Warrior target = Warrior.builder().build();
+        assertNotNull(warrior);
+        assertNotNull(target);
+        int currentTargetHP = target.getHealth();
+        warrior.attack(target);
+        int changedTargetHP = target.getHealth();
+        assertNotEquals(currentTargetHP,changedTargetHP);
+        assertTrue(currentTargetHP>changedTargetHP);
     }
 
 }

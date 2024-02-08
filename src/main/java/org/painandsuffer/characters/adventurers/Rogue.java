@@ -9,16 +9,21 @@ public class Rogue extends Adventurer {
 
     public Rogue(String name, int health, int defence, int magicProtection, int evasionRate, int damage,
                  int criticalRate, Weapon weapon, ArmourSet armourSet) {
-        super(name, health, defence, magicProtection, 30, damage,criticalRate, weapon, armourSet);
+        super(name, health, defence, magicProtection, evasionRate, damage == 0 ? 5:damage,criticalRate, weapon, armourSet);
     }
 
     public static Rogue.Builder builder() {
         return new Rogue.Builder();
     }
 
+    @Override
+    public void attack(Creature target) {
+        provideDoubleAttack(target);
+    }
+
     public void provideDoubleAttack(Creature target){
-        attack(target);
-        attack(target);
+        super.attack(target);
+        super.attack(target);
     }
 
     @Override

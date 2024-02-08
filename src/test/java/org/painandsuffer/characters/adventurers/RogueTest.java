@@ -40,16 +40,16 @@ public class RogueTest {
     }
 
     @Test
-    public void whenRogueCreatedUsingBuilderWithSword_thenWeaponShouldBeSetToRogue() {
-        Weapon sword = new Dagger();
-        Rogue rogue = Rogue.builder().weapon(sword).build();
+    public void whenRogueCreatedUsingBuilderWithDagger_thenWeaponShouldBeSetToRogue() {
+        Weapon dagger = new Dagger();
+        Rogue rogue = Rogue.builder().weapon(dagger).build();
         assertNotNull(rogue);
         assertNotNull(rogue.getWeapon());
-        assertEquals(sword, rogue.getWeapon());
+        assertEquals(dagger, rogue.getWeapon());
     }
 
     @Test
-    public void whenRogueCreatedUsingBuilderWithChestArmour_thenArmourSetWithChestArmourShouldBeCreatedAndSetToWarrior() {
+    public void whenRogueCreatedUsingBuilderWithChestArmour_thenArmourSetWithChestArmourShouldBeCreatedAndSetToRogue() {
         ChestArmour leatherArmour = new LeatherArmour();
         Rogue rogue = Rogue.builder().armourSet(ArmourSet.builder().chestArmour(new LeatherArmour()).build()).build();
         assertNotNull(rogue);
@@ -59,21 +59,21 @@ public class RogueTest {
     }
 
     @Test
-    public void whenRogueHasAnyPieceOfArmourWithDefenceFromBuilder_thenWarriorDefenceShouldBeIncreasedOnThatAmount() {
+    public void whenRogueHasAnyPieceOfArmourWithDefenceFromBuilder_thenRogueDefenceShouldBeIncreasedOnThatAmount() {
         ChestArmour leatherArmour = new LeatherArmour();
-        int basicWarriorDefence = Warrior.builder().build().getDefence();
+        int basicRogueDefence = Rogue.builder().build().getDefence();
         Rogue rogue = Rogue.builder().armourSet(ArmourSet.builder().chestArmour(new LeatherArmour()).build()).build();
         assertNotNull(rogue);
         assertNotNull(rogue.getArmourSet());
         assertNotNull(rogue.getArmourSet().getChestArmour());
-        assertEquals(basicWarriorDefence + leatherArmour.getDefence(), rogue.getDefence());
+        assertEquals(basicRogueDefence + leatherArmour.getDefence(), rogue.getDefence());
     }
 
     @Test
     public void whenArmourItemEquippedOnDefaultRogue_thenItemShouldBeEquippedAndRogueDefenceShouldBeIncreasedOnThatAmount() {
         ChestArmour leatherArmour = new LeatherArmour();
         Rogue rogue = Rogue.builder().build();
-        int basicWarriorDefence = rogue.getDefence();
+        int basicRogueDefence = rogue.getDefence();
 
         rogue.equipItem(leatherArmour);
         ChestArmour actualArmour = rogue.getArmourSet().getChestArmour();
@@ -81,7 +81,7 @@ public class RogueTest {
         assertNotNull(rogue);
         assertNotNull(rogue.getArmourSet());
         assertNotNull(actualArmour);
-        assertEquals(basicWarriorDefence + leatherArmour.getDefence(), rogue.getDefence());
+        assertEquals(basicRogueDefence + leatherArmour.getDefence(), rogue.getDefence());
         assertEquals(leatherArmour, actualArmour);
     }
 
@@ -97,10 +97,9 @@ public class RogueTest {
     }
 
     @Test
-    public void whenRogueWithSwordUseAttackToTargetWithNoArmor_thenTargetShouldLoseHP(){
+    public void whenRogueWithDaggerUseAttackToTargetWithNoArmor_thenTargetShouldLoseHP(){
         Rogue rogue = Rogue.builder().weapon(new Dagger()).build();
         Rogue target = Rogue.builder().build();
-        target.setEvasionRate(0);
         assertNotNull(rogue);
         assertNotNull(target);
         int currentTargetHP = target.getHealth();
@@ -114,8 +113,7 @@ public class RogueTest {
     public void whenRogueWithDefaultWeaponAttackTargetWithCriticalAttack_thenTargetShouldLoseHP(){
         Rogue rogue = Rogue.builder().build();
         Rogue target = Rogue.builder().build();
-        rogue.setEvasionRate(0);
-        target.setEvasionRate(0);
+        target.setDefence(0);
         assertNotNull(rogue);
         assertNotNull(target);
         int currentTargetHP = target.getHealth();

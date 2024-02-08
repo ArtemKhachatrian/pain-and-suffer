@@ -17,7 +17,7 @@ public class Mage extends Adventurer implements MagicUser {
 
     public Mage(String name, int health, int defence, int magicProtection, int evasionRate, int damage,
                 int criticalRate,Weapon weapon, ArmourSet armourSet, int mana) {
-        super(name, health, defence, magicProtection, evasionRate, damage,criticalRate, weapon, armourSet);
+        super(name, health, defence, magicProtection, evasionRate, damage == 0 ? 2:damage,criticalRate, weapon, armourSet);
         this.mana = mana;
     }
 
@@ -26,7 +26,7 @@ public class Mage extends Adventurer implements MagicUser {
     }
 
     public void setMana(int mana) {
-        if (mana >= 0) {
+        if (mana <= 0) {
             System.out.println("Your out of mana ");
         } else this.mana = mana;
     }
@@ -36,8 +36,9 @@ public class Mage extends Adventurer implements MagicUser {
     @Override
     public void defend() {
         MagicShield magicShield = new MagicShield(this);
-        this.getStatuses().add(magicShield);
         magicShield.applyMagicProtection();
+        this.getStatuses().add(magicShield);
+
 
     }
 

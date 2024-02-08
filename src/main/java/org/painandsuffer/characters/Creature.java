@@ -70,7 +70,8 @@ public abstract class Creature {
     }
 
     public int randomDiceRoll(int origin, int bound) {
-        return random.nextInt(1, 20);
+        if (origin >= bound) return 0;
+        return random.nextInt(origin,bound);
     }
 
     private boolean isMissed(Creature creature) {
@@ -92,7 +93,7 @@ public abstract class Creature {
     }
 
     private boolean checkCriticalRoll() {
-        return randomDiceRoll(1, 100) > getCriticalRate();
+        return randomDiceRoll(1, 100) < getCriticalRate();
     }
 
     private void baseAttack(Creature target, int damage) {
@@ -104,7 +105,7 @@ public abstract class Creature {
     }
 
     private int getCurrentBaseDamage() {
-        return randomDiceRoll(0, getDamage()) + getWeapon().getDamage();
+        return randomDiceRoll(1, getDamage()) + getWeapon().getDamage();
     }
 
     private boolean isMagicProtectionGonnaBreak(Creature target, int damageToTarget) {

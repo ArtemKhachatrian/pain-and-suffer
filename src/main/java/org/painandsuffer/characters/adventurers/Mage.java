@@ -60,10 +60,7 @@ public class Mage extends Adventurer implements MagicUser {
     public static class Builder extends Adventurer.Builder<Mage> {
         private int mana = 100;
 
-        public Creature.Builder<Mage> mana(int mana) {
-            this.mana = mana;
-            return this;
-        }
+
 
         @Override
         public Mage build() {

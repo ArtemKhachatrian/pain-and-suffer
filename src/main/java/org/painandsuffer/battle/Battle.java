@@ -2,6 +2,9 @@ package org.painandsuffer.battle;
 
 import org.painandsuffer.battle.statuses.Status;
 import org.painandsuffer.characters.Creature;
+import org.painandsuffer.characters.adventurers.Adventurer;
+import org.painandsuffer.characters.adventurers.Mage;
+import org.painandsuffer.characters.adventurers.Warrior;
 
 public class Battle {
 
@@ -12,6 +15,7 @@ public class Battle {
         fightUntilDeath(playerOne, playerTwo);
         printWinnersName(playerOne, playerTwo);
     }
+
 
     private void fightUntilDeath(Creature playerOne, Creature playerTwo) {
         while (playerOne.getHealth() > 0 && playerTwo.getHealth() > 0) {

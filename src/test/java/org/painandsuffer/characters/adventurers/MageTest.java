@@ -6,10 +6,7 @@ import org.painandsuffer.items.armour.chest.ChestArmour;
 import org.painandsuffer.items.armour.chest.Cloth;
 import org.painandsuffer.items.armour.chest.LeatherArmour;
 import org.painandsuffer.items.armour.chest.Robe;
-import org.painandsuffer.items.weapons.Dagger;
-import org.painandsuffer.items.weapons.Fists;
-import org.painandsuffer.items.weapons.Staff;
-import org.painandsuffer.items.weapons.Weapon;
+import org.painandsuffer.items.weapons.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -134,6 +131,25 @@ class MageTest {
         assertTrue(currentMageMana>changedMageMana);
         assertNotEquals(currentTargetHP,changedTargetHP);
         assertTrue(currentTargetHP>changedTargetHP);
+    }
+
+    @Test
+    public void whenMageWithDefaultArmorUseMagicShieldAndWarriorAttack_thenMagicShieldDamagedAndHPRemainsSame(){
+        Mage mage = Mage.builder().build();
+        Warrior warrior = Warrior.builder().weapon(new Sword()).build();
+        assertNotNull(mage);
+        assertNotNull(warrior);
+        mage.setDefence(0);
+        int currentMageHP = mage.getHealth();
+        mage.defend();
+        int currentMageMagicProtection = mage.getMagicProtection();
+        warrior.attack(mage);
+        int changedMagicProtection = mage.getMagicProtection();
+        int changedMageHP = mage.getHealth();
+        assertEquals(currentMageHP,changedMageHP);
+        assertTrue(currentMageMagicProtection>changedMagicProtection);
+        assertNotEquals(currentMageMagicProtection,changedMagicProtection);
+
     }
 
 }

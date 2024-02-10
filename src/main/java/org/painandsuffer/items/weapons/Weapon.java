@@ -1,9 +1,11 @@
 package org.painandsuffer.items.weapons;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.painandsuffer.characters.Creature;
 import org.painandsuffer.items.Equipable;
 import org.painandsuffer.items.Item;
-
+@Getter
 public abstract class Weapon implements Item, Equipable {
 
     private final int damage;

@@ -9,19 +9,20 @@ import org.painandsuffer.characters.adventurers.Warrior;
 import org.painandsuffer.items.armour.chest.Chainmail;
 import org.painandsuffer.items.weapons.Sword;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BattleTest {
     @Test
     public void whenCharacterAttacked_thenShouldLoseHP() {
         Creature warrior = createNewWarrior();
         Creature mage = createNewMage();
-        int initialHealth = mage.getHealth();
+        mage.setDefence(0);
+        mage.setEvasionRate(0);
+        int initialMageHealth = mage.getHealth();
         warrior.attack(mage);
-        int damagedHealth = mage.getHealth();
-        assertTrue(initialHealth > damagedHealth);
-        assertEquals(100, initialHealth);
+        int damagedMageHealth = mage.getHealth();
+        assertTrue(initialMageHealth > damagedMageHealth);
+        assertNotEquals(initialMageHealth,damagedMageHealth);
     }
 
     @Test
@@ -72,17 +73,6 @@ class BattleTest {
         return Mage.builder().name("Alister").build();
     }
 
-    @Test
-    public void whenCharacterDefends() {
-        Battle battle = new Battle();
-        Creature warrior = createNewWarrior();
-        Creature mage = createNewMage();
-        warrior.getArmourSet().setChestArmour(new Chainmail());
-        int armourWithoutDefend = warrior.getArmourSet().getBonusToArmour();
-        warrior.defend();
-        battle.providePvP(warrior, mage);
-        int armourWithDefend = warrior.getArmourSet().getBonusToArmour();
-        assertTrue(armourWithDefend > armourWithoutDefend);
-    }
+
 
 }

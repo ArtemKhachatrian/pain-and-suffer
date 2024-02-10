@@ -134,8 +134,10 @@ class WarriorTest {
 
     @Test
     public void whenWarriorWithDefaultWeaponAttackTargetWithCriticalAttack_thenTargetShouldLoseHP(){
-        Warrior warrior = Warrior.builder().criticalRate(100).build();
+        Warrior warrior = Warrior.builder().build();
         Warrior target = Warrior.builder().build();
+        warrior.setCriticalRate(100);
+        target.setDefence(0);
         assertNotNull(warrior);
         assertNotNull(target);
         int currentTargetHP = target.getHealth();

@@ -8,11 +8,11 @@ class RobeTest {
     @Test
     public void whenRobeCreatedWithDefaultDefendAndArmourDurability_thenRobeCreatedWithDefend5AndArmourDurability100(){
         Robe robe = new Robe();
-        int clothDefend = 5;
-        int clothDurability = 100;
+        int robeDefend = 5;
+        int robeDurability = 100;
         assertNotNull(robe);
-        assertEquals(robe.getDefence(),clothDefend);
-        assertEquals(robe.getArmourDurability(),clothDurability);
+        assertEquals(robe.getDefence(),robeDefend);
+        assertEquals(robe.getArmourDurability(),robeDurability);
     }
 
     @Test
@@ -28,7 +28,7 @@ class RobeTest {
     @Test
     public void whenRobeUseDescription_thenDescriptionAppears(){
         Robe robe = new Robe();
-        String clothDescription = robe.description();
+        String robeDescription = robe.description();
         assertNotNull(robe);
     }
 

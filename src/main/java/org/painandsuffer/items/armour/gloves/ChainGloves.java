@@ -4,7 +4,7 @@ import org.painandsuffer.characters.Creature;
 
 public class ChainGloves extends GlovesArmour {
 
-    public ChainGloves(int defend, int armourDurability) {
+    public ChainGloves() {
         super(5, 60);
     }
 

@@ -8,11 +8,11 @@ class LeatherArmourTest {
     @Test
     public void whenLeatherArmourCreatedWithDefaultDefendAndArmourDurability_thenLeatherArmourCreatedWithDefend10AndArmourDurability100(){
         LeatherArmour leatherArmour = new LeatherArmour();
-        int clothDefend = 10;
-        int clothDurability = 100;
+        int leatherArmourDefend = 10;
+        int leatherArmourDurability = 100;
         assertNotNull(leatherArmour);
-        assertEquals(leatherArmour.getDefence(),clothDefend);
-        assertEquals(leatherArmour.getArmourDurability(),clothDurability);
+        assertEquals(leatherArmour.getDefence(),leatherArmourDefend);
+        assertEquals(leatherArmour.getArmourDurability(),leatherArmourDurability);
     }
 
     @Test
@@ -28,7 +28,7 @@ class LeatherArmourTest {
     @Test
     public void whenLeatherArmourUseDescription_thenDescriptionAppears(){
         LeatherArmour leatherArmour = new LeatherArmour();
-        String clothDescription = leatherArmour.description();
+        String leatherArmourDescription = leatherArmour.description();
         assertNotNull(leatherArmour);
     }
 

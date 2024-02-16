@@ -9,7 +9,8 @@ public class Warrior extends Adventurer {
 
     public Warrior(String name, int health, int defence, int magicProtection, int evasionRate, int damage,
                    int criticalRate, Weapon weapon, ArmourSet armourSet) {
-        super(name, health, defence, magicProtection, evasionRate, damage == 0 ? 10:damage,30, weapon, armourSet);
+        super(name, health, defence, magicProtection, evasionRate, damage == 0 ? 10:damage,criticalRate == 0 ? 30:criticalRate,
+                weapon, armourSet);
     }
 
     public static Warrior.Builder builder() {

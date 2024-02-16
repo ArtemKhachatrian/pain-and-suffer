@@ -6,6 +6,8 @@ import org.painandsuffer.characters.adventurers.Adventurer;
 import org.painandsuffer.characters.adventurers.Mage;
 import org.painandsuffer.characters.adventurers.Warrior;
 
+import java.util.List;
+
 public class Battle {
 
     int roundCounter;
@@ -29,9 +31,11 @@ public class Battle {
 
     private void checkStatuses(Creature... creatures) {
         for (Creature creature : creatures) {
-            for (Status status : creature.getStatuses()) {
-                status.removeIfExpired();
-                status.setRoundsDuration(status.getRoundsDuration() - 1);
+            List<Status> statuses = creature.getStatuses();
+            for (int i = 0; i < statuses.size(); i++) {
+                Status currentStatus = statuses.get(i);
+                currentStatus.removeIfExpired();
+                currentStatus.setRoundsDuration(currentStatus.getRoundsDuration() - 1);
                 //TO DO: status.applyStatusCondition();
             }
         }

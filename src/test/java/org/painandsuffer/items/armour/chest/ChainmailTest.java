@@ -8,11 +8,11 @@ class ChainmailTest {
     @Test
     public void whenChainmailCreatedWithDefaultDefendAndArmourDurability_thenChainmailCreatedWithDefend15AndArmourDurability100(){
         Chainmail chainmail = new Chainmail();
-        int clothDefend = 15;
-        int clothDurability = 100;
+        int chainmailDefend = 15;
+        int chainmailDurability = 100;
         assertNotNull(chainmail);
-        assertEquals(chainmail.getDefence(),clothDefend);
-        assertEquals(chainmail.getArmourDurability(),clothDurability);
+        assertEquals(chainmail.getDefence(),chainmailDefend);
+        assertEquals(chainmail.getArmourDurability(),chainmailDurability);
     }
 
     @Test
@@ -28,7 +28,7 @@ class ChainmailTest {
     @Test
     public void whenChainmailUseDescription_thenDescriptionAppears(){
         Chainmail chainmail = new Chainmail();
-        String clothDescription = chainmail.description();
+        String chainmailDescription = chainmail.description();
         assertNotNull(chainmail);
     }
 }

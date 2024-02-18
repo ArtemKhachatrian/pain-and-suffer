@@ -147,4 +147,12 @@ class WarriorTest {
         assertTrue(currentTargetHP>changedTargetHP);
     }
 
+    @Test
+    public void whenWarriorWithDefaultBuilderAndUseSetName_thenNameChanged(){
+        Warrior warrior = new Warrior.Builder().build();
+        warrior.setName("Robert");
+        assertNotNull(warrior);
+        assertSame("Robert", warrior.getName());
+    }
+
 }

@@ -17,6 +17,14 @@ public class MagicShield extends Status {
         }
     }
 
+    @Override
+    public void removeIfExpired() {
+        super.removeIfExpired();
+        int magicProtectionReduced = getCreature().getMagicProtection() - PROTECTION_AMOUNT;
+        if (isExpired()) getCreature().setMagicProtection(Math.max(magicProtectionReduced, 0));
+    }
+
+
     private int calculateNewProtectionAmount() {
         return getCreature().getMagicProtection() + PROTECTION_AMOUNT;
     }

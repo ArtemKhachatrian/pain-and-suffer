@@ -27,6 +27,7 @@ public class Mage extends Adventurer implements MagicUser {
 
     public void setMana(int mana) {
         if (mana <= 0) {
+            this.mana = 0;
             System.out.println("Your out of mana ");
         } else this.mana = mana;
     }

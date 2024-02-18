@@ -52,6 +52,7 @@ class BattleTest {
         warrior.attack(mage);
         int damagedHealth = mage.getHealth();
         assertEquals(100, initialHealth);
+        assertTrue(initialHealth > damagedHealth);
     }
 
     @Test

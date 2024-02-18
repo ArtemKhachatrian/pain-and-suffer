@@ -23,4 +23,38 @@ class MagicShieldTest {
         assertTrue(mageDefaultMagicProtection < mageMagicProtectionWithMagicShield);
     }
 
+    @Test
+    public void whenMageUseMagicShield_thenAfter2RoundsMagicShieldWillBeOut(){
+        Mage mage = new Mage.Builder().build();
+        int mageDefaultMagicProtection = mage.getMagicProtection();
+        Mage enemy = new Mage.Builder().build();
+        Battle battle = new Battle();
+        mage.setDefence(0);
+        enemy.setDefence(0);
+        mage.defend();
+        int mageMagicProtectionWithMagicShield = mage.getMagicProtection();
+        battle.providePvP(mage,enemy);
+        assertNotNull(mage);
+        assertNotNull(enemy);
+        assertTrue(mageDefaultMagicProtection < mageMagicProtectionWithMagicShield);
+    }
+
+    @Test
+    public void whenWarriorUseProtectiveStance_thenAfter3RoundsProtectiveStanceWillBeOut(){
+        Mage mage = new Mage.Builder().build();
+        int mageDefaultMagicProtection = mage.getMagicProtection();
+        Mage enemy = new Mage.Builder().build();
+        Battle battle = new Battle();
+        mage.setDefence(0);
+        enemy.setDefence(0);
+        mage.defend();
+        int mageMagicProtectionWithMagicShield = mage.getMagicProtection();
+        battle.providePvP(mage,enemy);
+        int mageMagicProtectionWhenMagicShieldOut = mage.getMagicProtection();
+        assertNotNull(mage);
+        assertNotNull(enemy);
+        assertTrue(mageDefaultMagicProtection < mageMagicProtectionWithMagicShield);
+        assertEquals(mageDefaultMagicProtection,mageMagicProtectionWhenMagicShieldOut);
+    }
+
 }

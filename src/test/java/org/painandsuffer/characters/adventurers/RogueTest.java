@@ -122,4 +122,12 @@ public class RogueTest {
         assertNotEquals(currentTargetHP,changedTargetHP);
         assertTrue(currentTargetHP>changedTargetHP);
     }
+
+    @Test
+    public void whenRogueWithDefaultBuilderAndUseSetName_thenNameChanged(){
+        Rogue rogue = new Rogue.Builder().build();
+        rogue.setName("Robert");
+        assertNotNull(rogue);
+        assertSame("Robert", rogue.getName());
+    }
 }

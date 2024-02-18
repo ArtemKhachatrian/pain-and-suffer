@@ -29,8 +29,10 @@ class ProtectiveStanceTest {
         warrior.defend();
         int warriorDefenceWithProtection = warrior.getDefence();
         battle.providePvP(warrior,enemy);
+        int warriorDefenceWhenProtectiveStanceOut = warrior.getDefence();
         assertNotNull(warrior);
         assertNotNull(enemy);
         assertTrue(warriorDefaultDefence < warriorDefenceWithProtection);
+        assertEquals(warriorDefaultDefence,warriorDefenceWhenProtectiveStanceOut);
     }
 }

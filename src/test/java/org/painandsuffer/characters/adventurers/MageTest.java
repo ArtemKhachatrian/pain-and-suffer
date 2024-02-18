@@ -149,7 +149,29 @@ class MageTest {
         assertEquals(currentMageHP,changedMageHP);
         assertTrue(currentMageMagicProtection>changedMagicProtection);
         assertNotEquals(currentMageMagicProtection,changedMagicProtection);
-
     }
+
+    @Test
+    public void whenMageWithDefaultBuilderAndUseSetName_thenNameChanged(){
+        Mage mage = new Mage.Builder().build();
+        mage.setName("Robert");
+        assertNotNull(mage);
+        assertSame("Robert", mage.getName());
+    }
+
+    @Test
+    public void whenMageUseMagicWithoutMana_thenUseMagicDontWork(){
+        Mage mage = Mage.builder().build();
+        Mage enemy = Mage.builder().build();
+        int initialEnemyHP = enemy.getHealth();
+        enemy.setDefence(0);
+        mage.setMana(0);
+        mage.useMagic(enemy);
+        int changedEnemyHP = enemy.getHealth();
+        assertNotNull(mage);
+        assertNotNull(enemy);
+        assertEquals(initialEnemyHP,changedEnemyHP);
+    }
+
 
 }

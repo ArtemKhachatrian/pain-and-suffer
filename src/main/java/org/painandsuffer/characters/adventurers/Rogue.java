@@ -30,7 +30,7 @@ public class Rogue extends Adventurer {
     public void defend() {
         Evasive evasive = new Evasive(this);
         this.getStatuses().add(evasive);
-        evasive.applyEvasive();
+        evasive.applyEffect();
     }
 
     public static class Builder extends Adventurer.Builder<Rogue> {

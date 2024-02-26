@@ -9,8 +9,11 @@ import org.painandsuffer.items.armour.ArmourSet;
 import org.painandsuffer.items.weapons.Weapon;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
+
 
 @Getter
 @Setter
@@ -34,8 +37,13 @@ public abstract class Creature {
 
     public void attack(Creature target) {
         if (isMissed(target)) return;
-        int damage =isCriticalDamage() ? getCurrentBaseDamage()*2 : getCurrentBaseDamage();
-        baseAttack(target,damage);
+        int damage = isCriticalDamage() ? getCurrentBaseDamage() * 2 : getCurrentBaseDamage();
+        baseAttack(target, damage);
+    }
+
+    public void makeAction(Runnable action){
+        progressStatuses();
+        action.run();
     }
 
     public abstract void defend();
@@ -69,9 +77,28 @@ public abstract class Creature {
         statuses.remove(status);
     }
 
+    private void progressStatus(Status status) {
+        if (status.isExpired()) {
+            removeStatus(status);
+            status.onExpired();
+        } else {
+            status.decreaseDuration();
+            status.applyEffect();
+        }
+    }
+
+    public void progressStatuses() {
+        Iterator<Status> statuses = this.getStatuses().iterator();
+        while (statuses.hasNext()) {
+            Status currentStatus = statuses.next();
+            progressStatus(currentStatus);
+            if (currentStatus.isExpired()) statuses.remove();
+        }
+    }
+
     public int randomDiceRoll(int origin, int bound) {
         if (origin >= bound) return 0;
-        return random.nextInt(origin,bound);
+        return random.nextInt(origin, bound);
     }
 
     private boolean isMissed(Creature creature) {

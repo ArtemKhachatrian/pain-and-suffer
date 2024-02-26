@@ -37,7 +37,7 @@ public class Mage extends Adventurer implements MagicUser {
     @Override
     public void defend() {
         MagicShield magicShield = new MagicShield(this);
-        magicShield.applyMagicProtection();
+        magicShield.applyEffect();
         this.getStatuses().add(magicShield);
 
 

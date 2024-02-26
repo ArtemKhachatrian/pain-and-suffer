@@ -6,4 +6,14 @@ public class CooldownStatus extends Status {
     public CooldownStatus(int roundsDuration, Creature creature) {
         super(roundsDuration, creature);
     }
+
+    @Override
+    public void applyEffect() {
+
+    }
+
+    @Override
+    public void onExpired() {
+
+    }
 }

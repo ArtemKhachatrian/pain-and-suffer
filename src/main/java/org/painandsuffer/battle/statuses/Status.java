@@ -5,12 +5,14 @@ import org.painandsuffer.characters.Creature;
 public abstract class Status {
     private int roundsDuration;
 
-    private Creature creature;
+    private final Creature creature;
 
     public Status(int roundsDuration, Creature creature) {
         this.roundsDuration = roundsDuration;
         this.creature = creature;
     }
+
+    public abstract void applyEffect();
 
     public int getRoundsDuration() {
         return roundsDuration;
@@ -24,15 +26,13 @@ public abstract class Status {
         return creature;
     }
 
-    public void setCreature(Creature creature) {
-        this.creature = creature;
-    }
-
-    protected boolean isExpired() {
+    public boolean isExpired() {
         return roundsDuration < 1;
     }
 
-    public void removeIfExpired() {
-        if (isExpired()) creature.removeStatus(this);
+    public void decreaseDuration(){
+        setRoundsDuration(getRoundsDuration() - 1);
     }
+
+    public abstract void onExpired();
 }

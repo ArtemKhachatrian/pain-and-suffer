@@ -2,11 +2,8 @@ package org.painandsuffer.battle;
 
 import org.painandsuffer.battle.statuses.Status;
 import org.painandsuffer.characters.Creature;
-import org.painandsuffer.characters.adventurers.Adventurer;
-import org.painandsuffer.characters.adventurers.Mage;
-import org.painandsuffer.characters.adventurers.Warrior;
 
-import java.util.List;
+import java.util.Iterator;
 
 public class Battle {
 
@@ -22,31 +19,29 @@ public class Battle {
     private void fightUntilDeath(Creature playerOne, Creature playerTwo) {
         while (playerOne.getHealth() > 0 && playerTwo.getHealth() > 0) {
             roundCounter++;
-            checkStatuses(playerOne, playerTwo);
-            playerOne.attack(playerTwo);
-            playerTwo.attack(playerOne);
-
+            playerAttack(playerOne, playerTwo);
+            playerAttack(playerTwo, playerOne);
         }
     }
 
-    private void checkStatuses(Creature... creatures) {
-        for (Creature creature : creatures) {
-            List<Status> statuses = creature.getStatuses();
-            for (int i = 0; i < statuses.size(); i++) {
-                Status currentStatus = statuses.get(i);
-                currentStatus.removeIfExpired();
-                currentStatus.setRoundsDuration(currentStatus.getRoundsDuration() - 1);
-                //TO DO: status.applyStatusCondition();
-            }
-        }
+    private void playerAttack(Creature player, Creature target) {
+        player.makeAction(() -> player.attack(target));
     }
 
     private void printWinnersName(Creature playerOne, Creature playerTwo) {
-        String winnerName = playerOne.getHealth() > 0 ? playerOne.getName() : playerTwo.getName();
-        System.out.printf("%s Wins! Honor and glory to the winner!", winnerName);
+        if (playerOne.getHealth() <= 0 && playerTwo.getHealth() <= 0) {
+            System.out.println("It's a draw! Both fighters are down!");
+        } else {
+            String winnerName = playerOne.getHealth() <= 0 ? playerTwo.getName() : playerOne.getName();
+            System.out.printf("%s Wins! Honor and glory to the winner!", winnerName);
+        }
     }
 
     public int getRoundCounter() {
         return roundCounter;
+    }
+
+    public void setRoundCounter(int roundCounter) {
+        this.roundCounter = roundCounter;
     }
 }

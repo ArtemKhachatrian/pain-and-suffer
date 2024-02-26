@@ -11,17 +11,17 @@ public class MagicShield extends Status {
         super(ROUNDS_DURATION, creature);
     }
 
-    public void applyMagicProtection() {
+    @Override
+    public void applyEffect() {
         if (!isActive()) {
             getCreature().setMagicProtection(calculateNewProtectionAmount());
         }
     }
 
     @Override
-    public void removeIfExpired() {
-        super.removeIfExpired();
+    public void onExpired() {
         int magicProtectionReduced = getCreature().getMagicProtection() - PROTECTION_AMOUNT;
-        if (isExpired()) getCreature().setMagicProtection(Math.max(magicProtectionReduced, 0));
+        getCreature().setMagicProtection(Math.max(magicProtectionReduced, 0));
     }
 
 
@@ -34,7 +34,7 @@ public class MagicShield extends Status {
     }
 
     @Override
-    protected boolean isExpired() {
+    public boolean isExpired() {
         return getRoundsDuration() <= 0 || getCreature().getMagicProtection() <= 0;
     }
 }

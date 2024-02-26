@@ -17,13 +17,13 @@ public class ProtectiveStance extends Status {
     }
 
     @Override
-    public void removeIfExpired() {
-        super.removeIfExpired();
-        if (isExpired()) getCreature().setDefence(calculateDecreasedDefenceValue());
+    public void onExpired() {
+        getCreature().setDefence(calculateDecreasedDefenceValue());
     }
 
-    public void increaseDefence() {
-        getCreature().setDefence(calculateIncreasedDefenceValue());
+    public void applyEffect() {
+        if (!isActive()){
+        getCreature().setDefence(calculateIncreasedDefenceValue());}
     }
 
     private int calculateIncreasedDefenceValue() {
@@ -39,6 +39,10 @@ public class ProtectiveStance extends Status {
         return defence
                 .divide(ARMOUR_MULTIPLIER,ROUNDING_MODE)
                 .intValue();
+    }
+
+    private boolean isActive() {
+        return getCreature().getStatuses().stream().anyMatch(obj -> obj.getClass().equals(ProtectiveStance.class));
     }
 
 }

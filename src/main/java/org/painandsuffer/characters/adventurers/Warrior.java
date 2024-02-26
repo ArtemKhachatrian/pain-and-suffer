@@ -21,7 +21,7 @@ public class Warrior extends Adventurer {
     public void defend() {
         ProtectiveStance protectiveStanceStatus = new ProtectiveStance(this);
         this.getStatuses().add(protectiveStanceStatus);
-        protectiveStanceStatus.increaseDefence();
+        protectiveStanceStatus.applyEffect();
     }
 
     public static class Builder extends Adventurer.Builder<Warrior> {

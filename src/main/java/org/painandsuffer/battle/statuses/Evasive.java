@@ -10,8 +10,8 @@ public class Evasive extends Status {
         super(ROUNDS_DURATION, creature);
     }
 
-    public void applyEvasive() {
-        if (!isActive()) {
+    public void applyEffect() {
+        if (isActive()) {
             getCreature().setEvasionRate(calculateNewEvasiveAmount());
         }
     }
@@ -21,7 +21,12 @@ public class Evasive extends Status {
     }
 
     private boolean isActive() {
-        return getCreature().getStatuses().stream().anyMatch(obj -> obj.getClass().equals(MagicShield.class));
+        return getCreature().getStatuses().stream().anyMatch(obj -> obj.getClass().equals(Evasive.class));
+    }
+
+    @Override
+    public void onExpired(){
+        getCreature().setEvasionRate(getCreature().getEvasionRate() - EVASION_AMOUNT);
     }
 
 }
